@@ -24,7 +24,6 @@ public class CatagoriesActivity extends AppCompatActivity {
         toolbar=findViewById(R.id.ToolBarid);
         recyclerView=findViewById(R.id.RecyclerViewid);
 
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Categories");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
