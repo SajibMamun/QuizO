@@ -1,6 +1,8 @@
 package com.sajibmamun.quizo;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +20,12 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CatagoryAdapter extends RecyclerView.Adapter<CatagoryAdapter.viewHolder> {
+    private  Context context;
 
     private List<CatagoryModel> catagoryModelList;
 
-    public CatagoryAdapter( List<CatagoryModel> catagoryModelList) {
+    public CatagoryAdapter(Context context, List<CatagoryModel> catagoryModelList) {
+        this.context = context;
         this.catagoryModelList = catagoryModelList;
     }
 
@@ -35,8 +39,20 @@ public class CatagoryAdapter extends RecyclerView.Adapter<CatagoryAdapter.viewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CatagoryAdapter.viewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CatagoryAdapter.viewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.setData(catagoryModelList.get(position).getImageURL(),catagoryModelList.get(position).getTitle());
+
+        holder.catagorylayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(context,QuestionSetActivity.class);
+                intent.putExtra("title",catagoryModelList.get(position).getTitle());
+                context.startActivity(intent);
+
+
+            }
+        });
 
     }
 
@@ -49,11 +65,13 @@ public class CatagoryAdapter extends RecyclerView.Adapter<CatagoryAdapter.viewHo
 
         private CircleImageView catagoryImage;
         private TextView CatagoryTitle;
+        private LinearLayout catagorylayout;
 
         public viewHolder(@NonNull View itemView) {
             super(itemView);
             catagoryImage = itemView.findViewById(R.id.catagoryimageid);
             CatagoryTitle = itemView.findViewById(R.id.catagorytileid);
+            catagorylayout=itemView.findViewById(R.id.catagoryitemid);
         }
 
         private void setData(String url, String title) {

@@ -42,7 +42,7 @@ public class CatagoriesActivity extends AppCompatActivity {
         list.add(new CatagoryModel("",""));
         list.add(new CatagoryModel("",""));
 
-        CatagoryAdapter adapter=new CatagoryAdapter(list);
+        CatagoryAdapter adapter=new CatagoryAdapter(this,list);
         recyclerView.setAdapter(adapter);
 
     }
