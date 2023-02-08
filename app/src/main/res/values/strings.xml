@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">QuizO</string>
+
+    <string-array name="defaultarray">
+
+
+        <item>Java</item>
+        <item>Android</item>
+        <item>Kotlin</item>
+        <item>Web</item>
+        <item>Native</item>
+    </string-array>
+</resources>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout1id"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:background="#6A5BE2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileimgid"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="112dp"
+            android:src="@drawable/sd"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="24dp"
+            android:fontFamily="@font/adamina"
+            android:text="Sajib Bin Mamun"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profileimgid" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:fontFamily="@font/adamina"
+            android:text="Welcome !"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout2"
+        android:layout_width="0dp"
+        android:layout_height="500dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/labyoutbg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout1id"
+      >
+
+        <TextView
+            android:id="@+id/quizotext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/adamina"
+            android:text="QuizO"
+            android:textColor="#6A5BE2"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/layout2"
+            app:layout_constraintStart_toStartOf="@id/layout2"
+            app:layout_constraintTop_toTopOf="@id/layout2" />
+
+
+        <com.cncoderx.wheelview.WheelView
+            android:id="@+id/topicwheel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/playbtnid"
+            app:layout_constraintTop_toBottomOf="@id/quizotext"
+            app:wheelCyclic="true"
+            app:wheelDividerColor="#6A5BE2"
+            app:wheelEntries="@array/defaultarray"
+            app:wheelHighlightColor="#FFF"
+            app:wheelItemCount="9"
+            app:wheelItemHeight="30dp"
+            app:wheelSelectedTextColor="#6A5BE2"
+            app:wheelItemWidth="80dp"
+            app:wheelTextColor="#CC343E45"
+            app:wheelTextSize="15sp"
+            />
+
+
+        <Button
+            android:id="@+id/playbtnid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:backgroundTint="#6A5BE2"
+            android:padding="10dp"
+            android:text="Let's Play"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@id/layout2"
+            app:layout_constraintEnd_toEndOf="@id/layout2"
+            app:layout_constraintStart_toStartOf="@id/layout2" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
