@@ -1,12 +1,16 @@
 package com.example.quizo
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import com.example.quizo.databinding.ActivityQuestionClassBinding
 
 class QuestionClassActivity : AppCompatActivity() {
 
-    var Qindex: Int=1
+    var Qindex: Int=0
 private val AndroidQuestion= listOf<DataClass>(
     DataClass("Android is ","an operating system","a web browser",
         "a web server","None of the above","an operating system",2),
@@ -72,7 +76,7 @@ private val AndroidQuestion= listOf<DataClass>(
 
 
 
-
+var subject:String?=null
 
 
 
@@ -82,5 +86,230 @@ private val AndroidQuestion= listOf<DataClass>(
         super.onCreate(savedInstanceState)
         binding1= ActivityQuestionClassBinding.inflate(layoutInflater)
         setContentView(binding1.root)
+
+        var intent1=intent
+       subject= intent1.getStringExtra("subject")
+        binding1.topicTVid.text="$subject"
+
+
+        if(subject=="Java")
+        {
+
+            setQuiz(Qindex,binding1)
+            binding1.nextbtnid.setOnClickListener(View.OnClickListener {
+                if(Qindex<JavaQuestion.size)
+                {
+                    setQuiz(Qindex,binding1)
+
+
+                    if(Qindex>0 && Qindex<=JavaQuestion.size)
+                    {
+                        binding1.previousbtnid.visibility=View.VISIBLE
+                    }
+
+                    binding1.previousbtnid.setOnClickListener(View.OnClickListener {
+
+                        if(Qindex>0 && Qindex<=JavaQuestion.size)
+                        {
+                            Qindex--
+                            setQuiz(Qindex,binding1)
+                        }
+
+                    })
+
+
+
+
+                    Qindex++
+
+
+
+                }
+            })
+
+
+
+
+        }
+
+
+
+
+
+        else if(subject=="Android")
+        {
+            setQuiz2(Qindex,binding1)
+
+            binding1.nextbtnid.setOnClickListener(View.OnClickListener {
+                if(Qindex<AndroidQuestion.size)
+                {
+                    setQuiz2(Qindex,binding1)
+
+                    if(Qindex>0 && Qindex<=AndroidQuestion.size)
+                    {
+                        binding1.previousbtnid.visibility=View.VISIBLE
+                    }
+
+                    binding1.previousbtnid.setOnClickListener(View.OnClickListener {
+
+                        if(Qindex>0 && Qindex<=AndroidQuestion.size)
+                        {
+                            Qindex--
+                            setQuiz2(Qindex,binding1)
+                        }
+
+                    })
+
+                    Qindex++
+
+                }
+            })
+
+
+        }
+
+
+
+
+
+        else if(subject=="Kotlin")
+        {
+            setQuiz3(Qindex,binding1)
+
+            binding1.nextbtnid.setOnClickListener(View.OnClickListener {
+                if(Qindex<KotlinQuestion.size)
+                {
+
+                    setQuiz3(Qindex,binding1)
+
+                    if(Qindex>0 && Qindex<=KotlinQuestion.size)
+                    {
+                        binding1.previousbtnid.visibility=View.VISIBLE
+                    }
+
+                    binding1.previousbtnid.setOnClickListener(View.OnClickListener {
+
+                        if(Qindex>0 && Qindex<=KotlinQuestion.size)
+                        {
+                            Qindex--
+                            setQuiz3(Qindex,binding1)
+                        }
+
+                    })
+
+
+
+                    Qindex++
+
+                }
+
+            })
+        }
+
+
+
+
+
+
+        else if(subject=="C Programming")
+        {
+            setQuiz4(Qindex,binding1)
+
+            binding1.nextbtnid.setOnClickListener(View.OnClickListener {
+                if(Qindex<CprogramingQuestion.size)
+                {
+
+                    setQuiz4(Qindex,binding1)
+                    if(Qindex>0 && Qindex<=CprogramingQuestion.size)
+                    {
+                        binding1.previousbtnid.visibility=View.VISIBLE
+                    }
+
+                    binding1.previousbtnid.setOnClickListener(View.OnClickListener {
+
+                        if(Qindex>0 && Qindex<=CprogramingQuestion.size)
+                        {
+                            Qindex--
+                            setQuiz4(Qindex,binding1)
+                        }
+
+                    })
+
+
+                    Qindex++
+
+                }
+            })
+        }
+        else if(subject=="HTML")
+        {
+            val intent=Intent(applicationContext,ErrorActivity::class.java)
+            startActivity(intent)
+        }
+
+
+
+
+
+
+
+
+    }
+
+
+    // for C propgramming
+    @SuppressLint("SetTextI18n")
+    private fun setQuiz4(qindex: Int, binding1: ActivityQuestionClassBinding) {
+        var quiz:DataClass=CprogramingQuestion.get(qindex)
+        binding1.questionnameTVid.text=quiz.question
+        binding1.option1id.text=quiz.option1
+        binding1.option2id.text=quiz.option2
+        binding1.option3id.text=quiz.option3
+        binding1.option4id.text=quiz.option4
+        binding1.questionmarkid.text="Point: ${quiz.quizpoint.toString()}"
+        binding1.quedtionindextvid.text="Question No: ${(qindex+1).toString()}/${CprogramingQuestion.size.toString()}"
+    }
+
+    //For kotlin
+    @SuppressLint("SetTextI18n")
+    private fun setQuiz3(qindex: Int, binding1: ActivityQuestionClassBinding) {
+        var quiz:DataClass=KotlinQuestion.get(qindex)
+
+        binding1.questionnameTVid.text=quiz.question
+        binding1.option1id.text=quiz.option1
+        binding1.option2id.text=quiz.option2
+        binding1.option3id.text=quiz.option3
+        binding1.option4id.text=quiz.option4
+        binding1.questionmarkid.text="Point: ${quiz.quizpoint.toString()}"
+        binding1.quedtionindextvid.text="Question No: ${(qindex+1).toString()}/${KotlinQuestion.size.toString()}"
+    }
+
+
+    //for Android
+    @SuppressLint("SetTextI18n")
+    private fun setQuiz2(qindex: Int, binding1: ActivityQuestionClassBinding) {
+        var quiz:DataClass=AndroidQuestion.get(qindex)
+        binding1.questionnameTVid.text=quiz.question
+        binding1.option1id.text=quiz.option1
+        binding1.option2id.text=quiz.option2
+        binding1.option3id.text=quiz.option3
+        binding1.option4id.text=quiz.option4
+        binding1.questionmarkid.text="Point: ${quiz.quizpoint.toString()}"
+        binding1.quedtionindextvid.text="Question No: ${(qindex+1).toString()}/${AndroidQuestion.size.toString()}"
+    }
+
+    //for Java
+
+    @SuppressLint("SetTextI18n")
+    private fun setQuiz(qindex: Int, binding1: ActivityQuestionClassBinding) {
+        var quiz:DataClass=JavaQuestion.get(qindex)
+
+        binding1.questionnameTVid.text=quiz.question
+        binding1.option1id.text=quiz.option1
+        binding1.option2id.text=quiz.option2
+        binding1.option3id.text=quiz.option3
+        binding1.option4id.text=quiz.option4
+        binding1.questionmarkid.text="Point: ${quiz.quizpoint.toString()}"
+        binding1.quedtionindextvid.text="Question No: ${(qindex+1).toString()}/${JavaQuestion.size.toString()}"
     }
 }

@@ -4,6 +4,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ErrorActivity">
+    tools:context=".ErrorActivity"
+    android:background="#6A5BE2">
+
+    <ImageView
+        android:id="@+id/imageid"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/sad"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        />
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/imageid"
+        android:text="Sorry"
+        app:layout_constraintTop_toTopOf="@id/imageid"
+        app:layout_constraintBottom_toBottomOf="@id/imageid"
+        android:layout_marginLeft="10dp"
+        android:textSize="25sp"
+        android:textColor="@color/white"
+        />
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/imageid"
+        android:text="No Question Available"
+        app:layout_constraintTop_toBottomOf="@id/tv1"
+        app:layout_constraintBottom_toBottomOf="@id/imageid"
+        android:layout_marginLeft="10dp"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/gobackbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Go Back"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.9"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
