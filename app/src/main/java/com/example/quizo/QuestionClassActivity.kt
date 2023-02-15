@@ -2,17 +2,24 @@ package com.example.quizo
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.res.ColorStateList
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.RadioButton
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
 import com.example.quizo.databinding.ActivityQuestionClassBinding
 
 class QuestionClassActivity : AppCompatActivity() {
 
     var Qindex: Int = 0
+    var updateQuestion: Int = 1
     var givenanswer: String? = null
+    private var defaultColor: ColorStateList? = null
+    private val countDownInMilliSecond: Long = 30000
+    private val countDownInterval: Long = 1000
+    private var timeLeftMilliSeconds: Long = 0
+    private var hasFinished = false
 
     var totalmarks: Int = 0
     private val AndroidQuestion = listOf<DataClass>(
@@ -155,30 +162,41 @@ class QuestionClassActivity : AppCompatActivity() {
 
     var subject: String? = null
 
-    lateinit var binding1: ActivityQuestionClassBinding
+    lateinit var binding: ActivityQuestionClassBinding
+
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding1 = ActivityQuestionClassBinding.inflate(layoutInflater)
-        setContentView(binding1.root)
+        binding = ActivityQuestionClassBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         var intent1 = intent
         subject = intent1.getStringExtra("subject")
-        binding1.topicTVid.text = "$subject"
+        binding.topicTVid.text = "$subject"
 
 
 
 
         if (subject == "Java") {
             intialQuestion(JavaQuestion)
+            nextquestionbtnclicked(binding.nextbtnid, JavaQuestion)
+            binding.quedtionindextvid.text = "${updateQuestion}/${JavaQuestion.size}"
+
 
         } else if (subject == "Android") {
             intialQuestion(AndroidQuestion)
+            nextquestionbtnclicked(binding.nextbtnid, AndroidQuestion)
+            binding.quedtionindextvid.text = "${updateQuestion}/${AndroidQuestion.size}"
 
         } else if (subject == "Kotlin") {
             intialQuestion(KotlinQuestion)
+            nextquestionbtnclicked(binding.nextbtnid, KotlinQuestion)
+            binding.quedtionindextvid.text = "${updateQuestion}/${KotlinQuestion.size}"
 
         } else if (subject == "C Programming") {
             intialQuestion(CprogramingQuestion)
+            nextquestionbtnclicked(binding.nextbtnid, CprogramingQuestion)
+            binding.quedtionindextvid.text = "${updateQuestion}/${CprogramingQuestion.size}"
 
         } else if (subject == "HTML") {
             val intent = Intent(applicationContext, ErrorActivity::class.java)
@@ -188,19 +206,68 @@ class QuestionClassActivity : AppCompatActivity() {
 
     }
 
-    private fun intialQuestion(QuestionList: List<DataClass>) {
-        val quiz=QuestionList[Qindex]
-        binding1.questionnameTVid.text=quiz.question
 
-        binding1.apply {
-            option1id.text=quiz.option1
-            option2id.text=quiz.option2
-            option3id.text=quiz.option3
-            option4id.text=quiz.option4
+    private fun nextquestionbtnclicked(nextbtnid: AppCompatButton, Quizlist: List<DataClass>) {
+        nextbtnid.setOnClickListener {
+
+            if (binding.radiogroupid.checkedRadioButtonId == -1) {
+                Toast.makeText(applicationContext, "Please Select an Option", Toast.LENGTH_SHORT)
+                    .show()
+
+            } else {
+                shownextQuestion(Quizlist)
+            }
+        }
+
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun shownextQuestion(Quizlist: List<DataClass>) {
+        checkAnswer()
+        binding.apply {
+            if (updateQuestion < Quizlist.size) {
+                updateQuestion++
+                binding.quedtionindextvid.text = "${updateQuestion}/${Quizlist.size}"
+
+            }
+
+
+            if (Qindex <= Quizlist.size - 1) {
+                var quiz = Quizlist[Qindex]
+                binding.questionnameTVid.text = quiz.question
+                option1id.text = quiz.option1
+                option2id.text = quiz.option2
+                option3id.text = quiz.option3
+                option4id.text = quiz.option4
+
+            } else {
+                hasFinished = true
+
+            }
+            radiogroupid.clearCheck()
+
         }
 
 
     }
+
+    private fun checkAnswer() {
+        Qindex++
+    }
+
+
+    private fun intialQuestion(QuestionList: List<DataClass>) {
+        val quiz = QuestionList[Qindex]
+        binding.questionnameTVid.text = quiz.question
+
+        binding.apply {
+            option1id.text = quiz.option1
+            option2id.text = quiz.option2
+            option3id.text = quiz.option3
+            option4id.text = quiz.option4
+        }
+    }
+
 
 }
 

@@ -29,6 +29,18 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/quiztimeid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time: 00"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topicTVid"
+            android:layout_marginTop="5dp"
+            />
+        <TextView
             android:id="@+id/questionnameTVid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
