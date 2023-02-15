@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         binding.playbtnid.setOnClickListener(View.OnClickListener {
 
 
-
                 var intent1=Intent(applicationContext,QuestionClassActivity::class.java)
                 intent1.putExtra("subject",topic)
                 startActivity(intent1)
