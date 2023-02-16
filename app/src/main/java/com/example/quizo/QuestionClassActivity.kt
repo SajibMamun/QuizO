@@ -3,23 +3,37 @@ package com.example.quizo
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
+import android.os.CountDownTimer
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import com.example.quizo.databinding.ActivityQuestionClassBinding
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 class QuestionClassActivity : AppCompatActivity() {
 
     var Qindex: Int = 0
     var updateQuestion: Int = 1
     var givenanswer: String? = null
+
+    //timer
+    private var countDownTimer: CountDownTimer? = null
     private var defaultColor: ColorStateList? = null
     private val countDownInMilliSecond: Long = 30000
     private val countDownInterval: Long = 1000
     private var timeLeftMilliSeconds: Long = 0
     private var hasFinished = false
+
+
+    private var score = 0
+    private var correct = 0
+    private var wrong = 0
+    private var skip = 0
+    private var qIndex = 0
 
     var totalmarks: Int = 0
     private val AndroidQuestion = listOf<DataClass>(
@@ -88,7 +102,7 @@ class QuestionClassActivity : AppCompatActivity() {
             "Octal escape",
             "Hexadecimal",
             "Line feed",
-            "nicode escape sequence",
+            "Unicode escape sequence",
             1
         ),
 
@@ -160,7 +174,18 @@ class QuestionClassActivity : AppCompatActivity() {
     )
 
 
+
+
     var subject: String? = null
+
+
+
+
+
+
+
+
+
 
     lateinit var binding: ActivityQuestionClassBinding
 
@@ -169,6 +194,7 @@ class QuestionClassActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityQuestionClassBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         var intent1 = intent
         subject = intent1.getStringExtra("subject")
@@ -183,20 +209,24 @@ class QuestionClassActivity : AppCompatActivity() {
             binding.quedtionindextvid.text = "${updateQuestion}/${JavaQuestion.size}"
 
 
+
         } else if (subject == "Android") {
             intialQuestion(AndroidQuestion)
             nextquestionbtnclicked(binding.nextbtnid, AndroidQuestion)
             binding.quedtionindextvid.text = "${updateQuestion}/${AndroidQuestion.size}"
+
 
         } else if (subject == "Kotlin") {
             intialQuestion(KotlinQuestion)
             nextquestionbtnclicked(binding.nextbtnid, KotlinQuestion)
             binding.quedtionindextvid.text = "${updateQuestion}/${KotlinQuestion.size}"
 
+
         } else if (subject == "C Programming") {
             intialQuestion(CprogramingQuestion)
             nextquestionbtnclicked(binding.nextbtnid, CprogramingQuestion)
             binding.quedtionindextvid.text = "${updateQuestion}/${CprogramingQuestion.size}"
+
 
         } else if (subject == "HTML") {
             val intent = Intent(applicationContext, ErrorActivity::class.java)
@@ -207,23 +237,23 @@ class QuestionClassActivity : AppCompatActivity() {
     }
 
 
+
+
+
+
     private fun nextquestionbtnclicked(nextbtnid: AppCompatButton, Quizlist: List<DataClass>) {
         nextbtnid.setOnClickListener {
 
-            if (binding.radiogroupid.checkedRadioButtonId == -1) {
-                Toast.makeText(applicationContext, "Please Select an Option", Toast.LENGTH_SHORT)
-                    .show()
+            shownextQuestion(Quizlist)
 
-            } else {
-                shownextQuestion(Quizlist)
-            }
         }
 
     }
 
     @SuppressLint("SetTextI18n")
     private fun shownextQuestion(Quizlist: List<DataClass>) {
-        checkAnswer()
+        checkAnswer(Quizlist)
+        Qindex++
         binding.apply {
             if (updateQuestion < Quizlist.size) {
                 updateQuestion++
@@ -232,27 +262,37 @@ class QuestionClassActivity : AppCompatActivity() {
             }
 
 
-            if (Qindex <= Quizlist.size - 1) {
+            if (Qindex < Quizlist.size) {
                 var quiz = Quizlist[Qindex]
                 binding.questionnameTVid.text = quiz.question
                 option1id.text = quiz.option1
                 option2id.text = quiz.option2
                 option3id.text = quiz.option3
                 option4id.text = quiz.option4
+                questionmarkid.text=quiz.quizpoint.toString()
 
-            } else {
-                hasFinished = true
+                if(Qindex==Quizlist.size-1)
+                {
+                    binding.nextbtnid.setText("Finish")
+
+                }
+
+            } else{
+                val intent = Intent(applicationContext, ResultActivity::class.java)
+                intent.putExtra("result",totalmarks.toString())
+                intent.putExtra("correct",correct.toString())
+                intent.putExtra("wrong",wrong.toString())
+                intent.putExtra("skip",skip.toString())
+                startActivity(intent)
+                finish()
 
             }
             radiogroupid.clearCheck()
 
+
         }
 
 
-    }
-
-    private fun checkAnswer() {
-        Qindex++
     }
 
 
@@ -265,9 +305,43 @@ class QuestionClassActivity : AppCompatActivity() {
             option2id.text = quiz.option2
             option3id.text = quiz.option3
             option4id.text = quiz.option4
+            questionmarkid.text=quiz.quizpoint.toString()
         }
     }
 
+
+
+
+
+    private fun checkAnswer(Quizlist: List<DataClass>) {
+        binding.apply {
+            if (binding.radiogroupid.checkedRadioButtonId == -1) {
+                skip++
+
+
+            } else {
+                val checkRadioButton = findViewById<RadioButton>(radiogroupid.checkedRadioButtonId)
+                val checkAnswer = checkRadioButton.text.toString()
+
+                if (checkAnswer == Quizlist[Qindex].correctanswer) {
+                    correct++
+                    totalmarks += Quizlist[Qindex].quizpoint
+
+
+
+                } else {
+                    wrong++
+                }
+
+            }
+        }
+
+
+
+
+
+
+    }
 
 }
 
